@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JOSECADENA.ORG — Centro de Mando Privado</title>
+  <style>
+    :root {
+      --bg-black: #090b0f;
+      --bg-panel: #12161f;
+      --bg-card: #181d29;
+      --border: #2a3142;
+      --btn-gray: #525d73;
+      --btn-gray-hover: #64718a;
+      --blue: #2563eb;
+      --emerald: #10b981;
+      --amber: #f59e0b;
+      --red: #ef4444;
+      --text-white: #f8fafc;
+      --text-muted: #cbd5e1;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, Arial, sans-serif; }
+    body { background: var(--bg-black); color: var(--text-white); min-height: 100vh; font-size: 16px; }
+    
+    /* PANTALLA DE BLOQUEO CON CONTRASEÑA */
+    #loginScreen { position: fixed; inset: 0; background: var(--bg-black); display: flex; align-items: center; justify-content: center; z-index: 999; padding: 20px; }
+    .login-box { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 36px; width: 100%; max-width: 400px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.8); }
+    .login-box h2 { margin: 14px 0 8px; font-size: 1.5rem; }
+    .login-box p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 22px; }
+    
+    /* BOTONES Y CONTROLES */
+    .btn-gray { background: var(--btn-gray); color: #fff; border: 1px solid #74829c; padding: 9px 15px; border-radius: 8px; font-size: 0.95rem; font-weight: 600; cursor: pointer; }
+    .btn-gray:hover { background: var(--btn-gray-hover); }
+    .btn-blue { background: var(--blue); color: #fff; border: 1px solid #60a5fa; padding: 9px 16px; border-radius: 8px; font-size: 0.95rem; font-weight: 700; cursor: pointer; }
+    .btn-green { background: var(--emerald); color: #fff; border: none; padding: 11px 22px; border-radius: 8px; font-size: 1rem; font-weight: 700; cursor: pointer; }
+    
+    input[type="password"], input[type="text"], textarea, select {
+      width: 100%; background: #0d1017; border: 1px solid #3b4459; border-radius: 8px; color: #fff; padding: 11px 14px; font-size: 1rem;
+    }
+    
+    /* BARRA SUPERIOR Y ESTRUCTURA */
+    .topbar { height: 64px; background: var(--bg-panel); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 24px; }
+    .brand { font-size: 1.3rem; font-weight: 800; }
+    .badge-secure { color: var(--emerald); background: rgba(16,185,129,0.12); border: 1px solid rgba(16,185,129,0.3); padding: 6px 14px; border-radius: 20px; font-weight: 600; }
+    .workspace { display: flex; min-height: calc(100vh - 64px); }
+    .sidebar { width: 230px; background: var(--bg-panel); border-right: 1px solid var(--border); padding: 18px 12px; display: flex; flex-direction: column; gap: 8px; }
+    .nav-item { padding: 11px 14px; border-radius: 8px; color: var(--text-muted); font-weight: 600; cursor: pointer; text-decoration: none; }
+    .nav-item.active { background: var(--blue); color: #fff; }
+    .main-area { flex: 1; padding: 22px; display: flex; flex-direction: column; gap: 18px; }
+    .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 18px; }
+    
+    /* TABLA MATRIZ GENERAL */
+    .matrix-table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+    .matrix-table th { text-align: left; padding: 12px; border-bottom: 1px solid var(--border); color: #93c5fd; font-size: 0.9rem; }
+    .matrix-table td { padding: 12px; border-bottom: 1px solid #222836; vertical-align: middle; }
+    .status-ok { background: rgba(16,185,129,0.15); color: var(--emerald); padding: 4px 10px; border-radius: 12px; font-size: 0.85rem; font-weight: 700; }
+    .status-warn { background: rgba(245,158,11,0.15); color: var(--amber); padding: 4px 10px; border-radius: 12px; font-size: 0.85rem; font-weight: 700; }
+    .status-off { color: #94a3b8; font-size: 0.85rem; }
+    
+    /* INTERRUPTOR */
+    .switch { position: relative; display: inline-block; width: 46px; height: 24px; }
+    .switch input { opacity: 0; width: 0; height: 0; }
+    .slider { position: absolute; cursor: pointer; inset: 0; background: #475569; border-radius: 24px; transition: .2s; }
+    .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background: #fff; border-radius: 50%; transition: .2s; }
+    input:checked + .slider { background: var(--emerald); }
+    input:checked + .slider:before { transform: translateX(22px); }
+
+    /* CABINA INDIVIDUAL + TELÉFONO 6.6" */
+    .cabin-grid { display: grid; grid-template-columns: 1fr 365px; gap: 22px; align-items: start; }
+    .phone-frame { width: 365px; height: 740px; background: #fff; color: #0f172a; border: 10px solid #262c3a; border-radius: 34px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 20px 45px rgba(0,0,0,0.7); }
+    .phone-top { height: 26px; background: #0f172a; color: #fff; font-size: 0.78rem; display: flex; justify-content: space-between; align-items: center; padding: 0 18px; }
+    .phone-body { flex: 1; padding: 14px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+    .phone-img { width: 100%; height: 210px; object-fit: cover; border-radius: 8px; border: 1px solid #cbd5e1; }
+    .phone-bottom { height: 44px; border-top: 1px solid #e2e8f0; background: #f8fafc; display: flex; justify-content: space-around; align-items: center; font-size: 0.8rem; font-weight: 600; color: #334155; }
+    .hidden { display: none !important; }
+    @media (max-width: 1100px) { .cabin-grid { grid-template-columns: 1fr; } .sidebar { display: none; } }
+  </style>
+</head>
+<body>
+  <div id="loginScreen">
+    <div class="login-box">
+      <div style="font-size: 2.4rem;">🔒</div>
+      <h2>JOSECADENA.ORG</h2>
+      <p>Acceso restringido al Centro de Mando Omnicanal</p>
+      <input type="password" id="passInput" placeholder="Ingresa tu clave maestra..." onkeydown="if(event.key==='Enter') checkLogin()">
+      <button class="btn-green" style="width:100%; margin-top:14px;" onclick="checkLogin()">Ingresar al Centro de Mando</button>
+      <div id="loginError" style="color:#ef4444; margin-top:10px; font-size:0.9rem;" class="hidden">Clave incorrecta. Inténtalo de nuevo.</div>
+    </div>
+  </div>
+
+  <header class="topbar">
+    <div class="brand">JOSECADENA.ORG</div>
+    <div class="badge-secure">🔒 Centro de Mando (Seguro)</div>
+    <div style="display:flex; gap:10px;">
+      <button class="btn-gray" onclick="window.open('index.html', '_blank')">Ver Vitrina</button>
+      <button class="btn-gray" onclick="location.reload()">Salir</button>
+    </div>
+  </header>
+
+  <div class="workspace">
+    <aside class="sidebar">
+      <a class="nav-item active" onclick="showGeneralView()">&gt; Publicar Ahora</a>
+      <a class="nav-item" onclick="alert('0 borradores guardados.')">&gt; Borradores (0)</a>
+      <a class="nav-item" onclick="alert('0 publicaciones programadas.')">&gt; Programados (0)</a>
+      <a class="nav-item" onclick="alert('Historial sincronizado.')">&gt; Historial</a>
+      <a class="nav-item" onclick="window.open('index.html', '_blank')">&gt; Editar Vitrina</a>
+      <a class="nav-item" onclick="alert('Panel de APIs listo para el Hito 3.')">&gt; Conexiones (APIs)</a>
+    </aside>
+
+    <main class="main-area">
+      
+      <div id="generalView" style="display:flex; flex-direction:column; gap:18px;">
+        <div class="card">
+          <div style="font-weight:700; color:#93c5fd; margin-bottom:10px;">1. COMPOSITOR MAESTRO (Idea Base + Multimedia)</div>
+          <textarea id="masterText" rows="3" oninput="syncAllTexts()">Nuevo lanzamiento digital en josecadena.org 🚀 Automatiza y conecta todas tus redes sociales desde un solo centro de mando. #Ecuador #Innovación</textarea>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-top:12px; flex-wrap:wrap; gap:10px;">
+            <div style="display:flex; gap:10px; align-items:center;">
+              <input type="file" id="masterFile" accept="image/*" class="hidden" onchange="handleMasterImg(event)">
+              <button class="btn-gray" onclick="document.getElementById('masterFile').click()">+ Foto / Video</button>
+              <span id="masterFileName" style="font-size:0.9rem; color:var(--text-muted);">banner_oficial.svg</span>
+            </div>
+            <button class="btn-blue" onclick="syncAllTexts(true)">🤖 Adaptar a las 27 Redes con IA</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+            <h2 style="font-size:1.2rem;">Matriz General de Redes — Vista Ejecutiva (27 Plataformas)</h2>
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+              <button class="btn-blue" onclick="filterRows('all')">Todas (27)</button>
+              <button class="btn-gray" onclick="filterRows('ready')">Listas</button>
+              <button class="btn-gray" onclick="filterRows('off')">Apagadas</button>
+              <input type="text" id="searchBox" placeholder="🔍 Buscar red..." style="width:180px; padding:7px 12px;" oninput="searchRows()">
+            </div>
+          </div>
+
+          <div style="overflow-x:auto;">
+            <table class="matrix-table">
+              <thead>
+                <tr>
+                  <th>ESTADO</th>
+                  <th>PLATAFORMA</th>
+                  <th>FORMATO</th>
+                  <th>TEXTO ADAPTADO (Vista Rápida)</th>
+                  <th>SEMÁFORO</th>
+                  <th>ACCIÓN</th>
+                </tr>
+              </thead>
+              <tbody id="matrixBody"></tbody>
+            </table>
+          </div>
+
+          <div style="display:flex; justify-content:flex-end; gap:12px; margin-top:18px; padding-top:16px; border-top:1px solid var(--border);">
+            <button class="btn-gray" onclick="alert('Lote guardado en borradores.')">Guardar Borrador</button>
+            <button class="btn-gray" onclick="alert('Selecciona fecha y hora de lote.')">Programar Lote</button>
+            <button class="btn-green" onclick="publishAll()">🚀 PUBLICAR TODO (Redes Listas)</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="cabinView" class="hidden" style="display:flex; flex-direction:column; gap:16px;">
+        <div class="card" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+          <div style="display:flex; align-items:center; gap:12px;">
+            <span style="background:var(--blue); padding:6px 12px; border-radius:8px; font-weight:800;" id="cabinIcon">🌐</span>
+            <h2 id="cabinTitle" style="font-size:1.25rem;">CABINA — Panel de Conducción Total</h2>
+          </div>
+          <div style="display:flex; align-items:center; gap:12px;">
+            <span class="status-ok">● Lista para Conducir</span>
+            <button class="btn-gray" onclick="showGeneralView()">Volver a la Matriz General</button>
+          </div>
+        </div>
+
+        <div class="cabin-grid">
+          <div style="display:flex; flex-direction:column; gap:16px;">
+            <div class="card">
+              <div style="font-weight:700; color:#93c5fd; margin-bottom:8px;">ROBOT TEXT EDITOR (Editable para esta red)</div>
+              <textarea id="cabinText" rows="5" oninput="updatePhonePreview()"></textarea>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px; flex-wrap:wrap; gap:8px;">
+                <div style="display:flex; gap:8px;">
+                  <button class="btn-gray" onclick="cabinAi('ia')">🤖 Regenerar con IA</button>
+                  <button class="btn-gray" onclick="cabinAi('short')">✂️ Acortar</button>
+                  <button class="btn-gray" onclick="cabinAi('emoji')">✨ Añadir Emojis</button>
+                </div>
+                <span id="cabinCounter" style="font-size:0.9rem; color:var(--text-muted);">0 caracteres</span>
+              </div>
+            </div>
+
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+              <div class="card">
+                <div style="font-weight:700; color:#93c5fd; margin-bottom:10px;">FORMATO Y MULTIMEDIA</div>
+                <div style="display:flex; gap:8px; margin-bottom:12px;">
+                  <button class="btn-blue" id="fmt1" onclick="setCabinFmt(this,'Post / Artículo')">[Post]</button>
+                  <button class="btn-gray" id="fmt2" onclick="setCabinFmt(this,'Carrusel / Galería')">[Carrusel]</button>
+                  <button class="btn-gray" id="fmt3" onclick="setCabinFmt(this,'Reel / Video')">[Video]</button>
+                </div>
+                <button class="btn-gray" style="width:100%;" onclick="document.getElementById('masterFile').click()">Cambiar Archivo Multimedia</button>
+              </div>
+
+              <div class="card">
+                <div style="font-weight:700; color:#93c5fd; margin-bottom:10px;">AJUSTES FINOS (Fine-Tuning)</div>
+                <input type="text" id="cabinLocation" value="Durán / Guayaquil, Ecuador" style="margin-bottom:8px;" oninput="updatePhonePreview()">
+                <input type="text" id="cabinComment" value="Visita https://josecadena.org #Tech" oninput="updatePhonePreview()">
+              </div>
+            </div>
+
+            <div class="card" style="display:flex; justify-content:flex-end; gap:12px;">
+              <button class="btn-gray" onclick="saveCabinAndBack()">Guardar Cambios y Volver</button>
+              <button class="btn-green" id="cabinPublishBtn" onclick="publishSingle()">🚀 Publicar Solo Aquí</button>
+            </div>
+          </div>
+
+          <div class="phone-frame">
+            <div class="phone-top"><span>9:41</span><span>5G • 100%</span></div>
+            <div style="padding:10px 14px; border-bottom:1px solid #e2e8f0; display:flex; justify-content:space-between; font-weight:700;">
+              <span id="phoneNetName">Red Social</span>
+              <span style="color:#2563eb; font-size:0.85rem;">Vista Real 6.6"</span>
+            </div>
+            <div class="phone-body">
+              <div style="display:flex; align-items:center; gap:10px;">
+                <div style="width:40px; height:40px; border-radius:50%; background:#00439c; color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800;">JC</div>
+                <div>
+                  <div style="font-weight:700; font-size:0.95rem;">José Cadena (@josecadena)</div>
+                  <div style="font-size:0.78rem; color:#64748b;" id="phoneLoc">Durán / Guayaquil, Ecuador</div>
+                </div>
+              </div>
+              <div id="phoneText" style="font-size:0.92rem; line-height:1.4; white-space:pre-wrap;"></div>
+              <img id="phoneImg" class="phone-img" src="data:image/svg+xml;utf8,<svg xmlns='http://w3.org' width='600' height='340'><rect width='600' height='340' fill='%2300439c'/><text x='300' y='160' fill='white' font-family='Arial' font-size='28' font-weight='bold' text-anchor='middle'>JOSECADENA.ORG</text><text x='300' y='200' fill='%2393c5fd' font-family='Arial' font-size='18' text-anchor='middle'>Centro de Mando Omnicanal</text></svg>">
+              <div style="background:#f1f5f9; padding:8px; border-radius:6px; font-size:0.8rem;" id="phoneComment"></div>
+            </div>
+            <div class="phone-bottom"><span>🏠 Inicio</span><span>🔍 Explorar</span><span>➕ Crear</span><span>👤 Perfil</span></div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script>
