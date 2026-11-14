@@ -9,430 +9,202 @@
       --primary-blue: #00439c;
       --bright-blue: #0070d1;
       --accent-orange: #d94e1f;
-      --dark-bg: #0b0e14;
       --light-bg: #ffffff;
       --soft-gray: #f4f6f9;
       --text-dark: #1f2937;
       --text-muted: #6b7280;
     }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, Arial, sans-serif; }
+    html { scroll-behavior: smooth; }
+    body { background-color: var(--light-bg); color: var(--text-dark); line-height: 1.6; }
+    .top-brand-strip { background: #000; color: #fff; text-align: right; padding: 4px 32px; font-size: 0.78rem; font-weight: 700; letter-spacing: 1.5px; }
+    header { background: #fff; border-bottom: 1px solid #e5e7eb; padding: 14px 32px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
+    .logo { font-size: 1.35rem; font-weight: 800; color: var(--primary-blue); text-decoration: none; }
+    nav { display: flex; gap: 24px; }
+    nav a { text-decoration: none; color: var(--text-dark); font-weight: 600; font-size: 0.95rem; }
+    nav a:hover { color: var(--bright-blue); }
+    .btn-admin { background: var(--bright-blue); color: #fff; padding: 8px 18px; border-radius: 20px; font-weight: 700; font-size: 0.9rem; text-decoration: none; }
+    .hero { background: linear-gradient(90deg, rgba(11,14,20,0.92) 0%, rgba(0,67,156,0.75) 100%); color: #fff; padding: 100px 48px; min-height: 480px; display: flex; align-items: center; }
+    .hero-content { max-width: 640px; }
+    .hero-tag { display: inline-block; background: rgba(255,255,255,0.18); padding: 5px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: 700; margin-bottom: 16px; }
+    .hero h1 { font-size: 2.8rem; line-height: 1.15; margin-bottom: 18px; font-weight: 800; }
+    .hero p { font-size: 1.12rem; color: #e5e7eb; margin-bottom: 28px; }
+    .hero-buttons { display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn-white { background: #fff; color: #000; padding: 12px 26px; border-radius: 25px; font-weight: 700; text-decoration: none; }
+    .btn-orange { background: var(--accent-orange); color: #fff; padding: 12px 26px; border-radius: 25px; font-weight: 700; text-decoration: none; }
+    .about-section { padding: 75px 48px; max-width: 1200px; margin: 0 auto; }
+    .about-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 40px; align-items: center; }
+    .about-label { color: var(--primary-blue); font-weight: 700; text-transform: uppercase; font-size: 0.9rem; margin-bottom: 8px; }
+    .about-section h2 { font-size: 2.2rem; color: #111827; margin-bottom: 16px; }
+    .about-section p { font-size: 1.05rem; color: #4b5563; margin-bottom: 14px; }
+    .author-card { background: var(--soft-gray); border: 1px solid #e5e7eb; border-radius: 16px; padding: 28px; text-align: center; }
+    .author-avatar { width: 120px; height: 120px; border-radius: 50%; background: var(--primary-blue); color: #fff; font-size: 2.4rem; font-weight: 800; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
+    .products-section { background: var(--soft-gray); padding: 75px 48px; }
+    .container { max-width: 1200px; margin: 0 auto; }
+    .section-header { text-align: center; margin-bottom: 44px; }
+    .section-header h2 { font-size: 2.2rem; color: #111827; }
+    .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 24px; }
+    .product-card { background: #fff; border-radius: 16px; padding: 28px; box-shadow: 0 4px 16px rgba(0,0,0,0.05); display: flex; flex-direction: column; justify-content: space-between; }
+    .product-icon { font-size: 2.4rem; margin-bottom: 14px; }
+    .product-card h3 { font-size: 1.3rem; margin-bottom: 10px; }
+    .product-card p { color: #4b5563; margin-bottom: 20px; }
+    .btn-pill-blue { display: inline-block; background: var(--bright-blue); color: #fff; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: 700; text-align: center; }
+    .moments-section { padding: 75px 48px; }
+    .moments-title { font-size: 2rem; font-weight: 700; margin-bottom: 26px; }
+    .moments-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+    .moment-card { height: 320px; border-radius: 14px; padding: 18px; color: #fff; display: flex; flex-direction: column; justify-content: space-between; }
+    .m1 { background: linear-gradient(135deg, #00439c, #0b0e14); }
+    .m2 { background: linear-gradient(135deg, #059669, #0b0e14); }
+    .m3 { background: linear-gradient(135deg, #d94e1f, #0b0e14); }
+    .m4 { background: linear-gradient(135deg, #2563eb, #0b0e14); }
+    .badge-new { align-self: flex-end; background: #fff; color: #000; font-size: 0.75rem; font-weight: 800; padding: 3px 10px; border-radius: 12px; }
+    footer { background: var(--primary-blue); color: #fff; padding: 55px 48px 32px; }
+    .footer-top { max-width: 1200px; margin: 0 auto 32px; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 20px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+    .footer-grid { max-width: 1200px; margin: 0 auto 32px; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 28px; }
+    .footer-col h5 { margin-bottom: 12px; }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 8px; }
+    .footer-col ul li a { color: #dbeafe; text-decoration: none; font-size: 0.9rem; }
+    .social-pills { display: flex; gap: 8px; flex-wrap: wrap; }
+    .social-pill { background: rgba(255,255,255,0.2); color: #fff; padding: 6px 12px; border-radius: 6px; text-decoration: none; font-size: 0.85rem; font-weight: 700; }
+    .footer-bottom { max-width: 1200px; margin: 0 auto; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 20px; display: flex; justify-content: space-between; flex-wrap: wrap; font-size: 0.85rem; color: #dbeafe; }
+    @media (max-width: 768px) { .about-grid { grid-template-columns: 1fr; } nav { display: none; } }
+  </style>
+</head>
+<body>
+  <div class="top-brand-strip">JOSECADENA.ORG • PLATAFORMA OFICIAL</div>
+  <header>
+    <a href="#" class="logo">JOSECADENA.ORG</a>
+    <nav>
+      <a href="#inicio">Inicio</a>
+      <a href="#perfil">Sobre Mí</a>
+      <a href="#proyectos">Proyectos</a>
+      <a href="#momentos">Novedades</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+    <a href="#admin" class="btn-admin" onclick="alert('Aquí conectaremos tu Centro de Mando Privado.')">🔒 Centro de Mando</a>
+  </header>
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    }
+  <section id="inicio" class="hero">
+    <div class="hero-content">
+      <span class="hero-tag">LANZAMIENTO OFICIAL 2026</span>
+      <h1>Innovación Digital y Estrategia Omnicanal</h1>
+      <p>Bienvenido a mi espacio oficial. Explora mis proyectos tecnológicos, publicaciones estratégicas y actualizaciones conectadas desde un solo centro de mando.</p>
+      <div class="hero-buttons">
+        <a href="#proyectos" class="btn-white">Explorar Proyectos</a>
+        <a href="#momentos" class="btn-orange">Ver Novedades</a>
+      </div>
+    </div>
+  </section>
 
-    html {
-      scroll-behavior: smooth;
-    }
+  <section id="perfil" class="about-section">
+    <div class="about-grid">
+      <div>
+        <div class="about-label">Perfil Profesional • Ecuador</div>
+        <h2>José Cadena</h2>
+        <p>Desarrollador y arquitecto de plataformas digitales enfocado en la automatización inteligente y la integración de ecosistemas web y redes sociales.</p>
+        <p>A través de <strong>josecadena.org</strong> comparto avances tecnológicos, herramientas de gestión omnicanal y recursos diseñados para optimizar la presencia digital moderna.</p>
+      </div>
+      <div class="author-card">
+        <div class="author-avatar">JC</div>
+        <h3>José Cadena</h3>
+        <p style="color: #6b7280; font-size: 0.95rem; margin-top: 6px;">Arquitectura Web &amp; Automatización<br>Durán / Guayaquil, Ecuador</p>
+      </div>
+    </div>
+  </section>
 
-    body {
-      background-color: var(--light-bg);
-      color: var(--text-dark);
-      line-height: 1.6;
-    }
+  <section id="proyectos" class="products-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Descubre mis Proyectos y Soluciones</h2>
+        <p>Herramientas y desarrollos activos creados bajo nuestra arquitectura digital.</p>
+      </div>
+      <div class="products-grid">
+        <div class="product-card">
+          <div>
+            <div class="product-icon">🚀</div>
+            <h3>Centro de Mando Omnicanal</h3>
+            <p>Plataforma de control unificado con edición asistida por inteligencia artificial para gestionar múltiples redes sociales simultáneamente.</p>
+          </div>
+          <a href="#momentos" class="btn-pill-blue">Más información</a>
+        </div>
+        <div class="product-card">
+          <div>
+            <div class="product-icon">🌐</div>
+            <h3>Arquitectura Web en la Nube</h3>
+            <p>Despliegue continuo de alta velocidad con seguridad perimetral, dominios personalizados y disponibilidad global.</p>
+          </div>
+          <a href="#momentos" class="btn-pill-blue">Más información</a>
+        </div>
+        <div class="product-card">
+          <div>
+            <div class="product-icon">🤖</div>
+            <h3>Automatización con IA</h3>
+            <p>Flujos inteligentes para adaptar formatos, textos y contenido multimedia a los estándares de cada plataforma digital.</p>
+          </div>
+          <a href="#momentos" class="btn-pill-blue">Más información</a>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    /* BARRA SUPERIOR (Estilo PlayStation limpio) */
-    .top-brand-strip {
-      background: #000000;
-      color: #ffffff;
-      text-align: right;
-      padding: 4px 32px;
-      font-size: 0.78rem;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-    }
+  <section id="momentos" class="moments-section">
+    <div class="container">
+      <h2 class="moments-title">Momentos y Publicaciones Recientes</h2>
+      <div class="moments-grid">
+        <div class="moment-card m1">
+          <span class="badge-new">NUEVO</span>
+          <div><h4>Lanzamiento Oficial de josecadena.org</h4><span>Infraestructura Web • Nov 2026</span></div>
+        </div>
+        <div class="moment-card m2">
+          <span class="badge-new">NUEVO</span>
+          <div><h4>Cabina de Conducción Total</h4><span>Diseño UI/UX • Nov 2026</span></div>
+        </div>
+        <div class="moment-card m3">
+          <span class="badge-new">NUEVO</span>
+          <div><h4>Integración de 27 Plataformas</h4><span>Arquitectura Omnicanal • Nov 2026</span></div>
+        </div>
+        <div class="moment-card m4">
+          <span class="badge-new">NUEVO</span>
+          <div><h4>Robot Editor con Inteligencia Artificial</h4><span>Automatización • Nov 2026</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    header {
-      background: #ffffff;
-      border-bottom: 1px solid #e5e7eb;
-      padding: 14px 32px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-
-    .logo {
-      font-size: 1.35rem;
-      font-weight: 800;
-      color: var(--primary-blue);
-      text-decoration: none;
-      letter-spacing: 0.5px;
-    }
-
-    nav {
-      display: flex;
-      gap: 24px;
-    }
-
-    nav a {
-      text-decoration: none;
-      color: var(--text-dark);
-      font-weight: 600;
-      font-size: 0.95rem;
-      transition: color 0.2s;
-    }
-
-    nav a:hover {
-      color: var(--bright-blue);
-    }
-
-    .btn-admin {
-      background-color: var(--bright-blue);
-      color: #ffffff;
-      border: none;
-      padding: 8px 18px;
-      border-radius: 20px;
-      font-weight: 700;
-      font-size: 0.9rem;
-      cursor: pointer;
-      text-decoration: none;
-    }
-
-    .btn-admin:hover {
-      background-color: var(--primary-blue);
-    }
-
-    /* SECCIÓN 1: PORTADA DE IMPACTO (Hero Banner estilo Imagen 1) */
-    .hero {
-      background: linear-gradient(90deg, rgba(11,14,20,0.92) 0%, rgba(11,14,20,0.65) 55%, rgba(0,67,156,0.4) 100%),
-                  url('https://unsplash.com') center/cover no-repeat;
-      color: #ffffff;
-      padding: 110px 48px;
-      min-height: 520px;
-      display: flex;
-      align-items: center;
-    }
-
-    .hero-content {
-      max-width: 620px;
-    }
-
-    .hero-tag {
-      display: inline-block;
-      background: rgba(255,255,255,0.15);
-      padding: 5px 14px;
-      border-radius: 20px;
-      font-size: 0.85rem;
-      font-weight: 700;
-      margin-bottom: 16px;
-      letter-spacing: 1px;
-    }
-
-    .hero h1 {
-      font-size: 3rem;
-      line-height: 1.15;
-      margin-bottom: 18px;
-      font-weight: 800;
-    }
-
-    .hero p {
-      font-size: 1.15rem;
-      color: #e5e7eb;
-      margin-bottom: 30px;
-    }
-
-    .hero-buttons {
-      display: flex;
-      gap: 14px;
-      flex-wrap: wrap;
-    }
-
-    .btn-white {
-      background: #ffffff;
-      color: #000000;
-      padding: 12px 26px;
-      border-radius: 25px;
-      font-weight: 700;
-      text-decoration: none;
-      font-size: 1rem;
-    }
-
-    .btn-orange {
-      background: var(--accent-orange);
-      color: #ffffff;
-      padding: 12px 26px;
-      border-radius: 25px;
-      font-weight: 700;
-      text-decoration: none;
-      font-size: 1rem;
-    }
-
-    /* SECCIÓN 2: PERFIL PERSONAL / EDITORIAL (Estilo Imagen 2 - Daniel Lacalle) */
-    .about-section {
-      padding: 80px 48px;
-      background-color: #ffffff;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1.4fr 1fr;
-      gap: 48px;
-      align-items: center;
-    }
-
-    .about-label {
-      color: var(--primary-blue);
-      font-weight: 700;
-      text-transform: uppercase;
-      font-size: 0.9rem;
-      letter-spacing: 1px;
-      margin-bottom: 8px;
-    }
-
-    .about-section h2 {
-      font-size: 2.3rem;
-      color: #111827;
-      margin-bottom: 18px;
-    }
-
-    .about-section p {
-      font-size: 1.08rem;
-      color: #4b5563;
-      margin-bottom: 16px;
-    }
-
-    .author-card {
-      background: var(--soft-gray);
-      border: 1px solid #e5e7eb;
-      border-radius: 16px;
-      padding: 28px;
-      text-align: center;
-    }
-
-    .author-avatar {
-      width: 130px;
-      height: 130px;
-      border-radius: 50%;
-      background: var(--primary-blue);
-      color: #ffffff;
-      font-size: 2.6rem;
-      font-weight: 800;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 16px;
-      box-shadow: 0 10px 25px rgba(0, 67, 156, 0.2);
-    }
-
-    /* SECCIÓN 3: PRODUCTOS Y PROYECTOS (Estilo Imagen 3 - PS5 Showcase) */
-    .products-section {
-      background-color: var(--soft-gray);
-      padding: 80px 48px;
-    }
-
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .section-header {
-      text-align: center;
-      margin-bottom: 48px;
-    }
-
-    .section-header h2 {
-      font-size: 2.4rem;
-      font-weight: 300;
-      color: #111827;
-    }
-
-    .section-header p {
-      color: var(--text-muted);
-      font-size: 1.1rem;
-      margin-top: 8px;
-    }
-
-    .products-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 28px;
-    }
-
-    .product-card {
-      background: #ffffff;
-      border-radius: 16px;
-      padding: 28px;
-      box-shadow: 0 4px 18px rgba(0,0,0,0.05);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      transition: transform 0.2s;
-    }
-
-    .product-card:hover {
-      transform: translateY(-5px);
-    }
-
-    .product-icon {
-      font-size: 2.5rem;
-      margin-bottom: 16px;
-    }
-
-    .product-card h3 {
-      font-size: 1.35rem;
-      margin-bottom: 10px;
-      color: #111827;
-    }
-
-    .product-card p {
-      color: #4b5563;
-      margin-bottom: 22px;
-      font-size: 0.98rem;
-    }
-
-    .btn-pill-blue {
-      display: inline-block;
-      background: var(--bright-blue);
-      color: #ffffff;
-      padding: 10px 20px;
-      border-radius: 20px;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 0.9rem;
-      text-align: center;
-    }
-
-    /* SECCIÓN 4: MOMENTOS Y VIDEOS VERTICALES (Estilo Imagen 4 - FIFA Clips) */
-    .moments-section {
-      padding: 80px 48px;
-      background-color: #ffffff;
-    }
-
-    .moments-title {
-      font-size: 2rem;
-      font-weight: 700;
-      margin-bottom: 28px;
-      color: #111827;
-    }
-
-    .moments-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
-    }
-
-    .moment-card {
-      position: relative;
-      height: 360px;
-      border-radius: 14px;
-      overflow: hidden;
-      background: #111827;
-      color: #ffffff;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      padding: 16px;
-      box-shadow: 0 10px 22px rgba(0,0,0,0.15);
-    }
-
-    .moment-bg-1 { background: linear-gradient(to top, rgba(0,0,0,0.88), rgba(0,67,156,0.35)), url('https://unsplash.com') center/cover; }
-    .moment-bg-2 { background: linear-gradient(to top, rgba(0,0,0,0.88), rgba(16,185,129,0.3)), url('https://unsplash.com') center/cover; }
-    .moment-bg-3 { background: linear-gradient(to top, rgba(0,0,0,0.88), rgba(217,78,31,0.35)), url('https://unsplash.com') center/cover; }
-    .moment-bg-4 { background: linear-gradient(to top, rgba(0,0,0,0.88), rgba(59,130,246,0.35)), url('https://unsplash.com') center/cover; }
-
-    .badge-new {
-      align-self: flex-end;
-      background: #ffffff;
-      color: #000000;
-      font-size: 0.72rem;
-      font-weight: 800;
-      padding: 3px 10px;
-      border-radius: 12px;
-      letter-spacing: 0.5px;
-    }
-
-    .moment-info h4 {
-      font-size: 1.05rem;
-      margin-bottom: 4px;
-    }
-
-    .moment-info span {
-      font-size: 0.82rem;
-      color: #cbd5e1;
-    }
-
-    /* SECCIÓN 5: PIE DE PÁGINA CORPORATIVO (Estilo Imagen 5 - PlayStation Footer) */
-    footer {
-      background-color: var(--primary-blue);
-      color: #ffffff;
-      padding: 60px 48px 36px;
-    }
-
-    .footer-top {
-      max-width: 1200px;
-      margin: 0 auto 40px;
-      border-bottom: 1px solid rgba(255,255,255,0.2);
-      padding-bottom: 24px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 16px;
-    }
-
-    .footer-logo {
-      font-size: 1.6rem;
-      font-weight: 800;
-      letter-spacing: 1px;
-    }
-
-    .footer-grid {
-      max-width: 1200px;
-      margin: 0 auto 40px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 32px;
-    }
-
-    .footer-col h5 {
-      font-size: 1rem;
-      margin-bottom: 14px;
-      font-weight: 700;
-    }
-
-    .footer-col ul {
-      list-style: none;
-    }
-
-    .footer-col ul li {
-      margin-bottom: 8px;
-    }
-
-    .footer-col ul li a {
-      color: #dbeafe;
-      text-decoration: none;
-      font-size: 0.9rem;
-    }
-
-    .footer-col ul li a:hover {
-      color: #ffffff;
-      text-decoration: underline;
-    }
-
-    .social-pills {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .social-pill {
-      background: rgba(255,255,255,0.18);
-      color: #ffffff;
-      padding: 6px 12px;
-      border-radius: 6px;
-      text-decoration: none;
-      font-size: 0.85rem;
-      font-weight: 700;
-    }
-
-    .social-pill:hover {
-      background: #ffffff;
-      color: var(--primary-blue);
-    }
+  <footer id="contacto">
+    <div class="footer-top">
+      <div style="font-size: 1.5rem; font-weight: 800;">JOSECADENA.ORG</div>
+      <div>🌐 Región: Ecuador (Español)</div>
+    </div>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h5>Acerca de</h5>
+        <ul><li><a href="#perfil">Sobre José Cadena</a></li><li><a href="#proyectos">Visión Tecnológica</a></li></ul>
+      </div>
+      <div class="footer-col">
+        <h5>Proyectos</h5>
+        <ul><li><a href="#proyectos">Centro de Mando</a></li><li><a href="#proyectos">Automatización IA</a></li></ul>
+      </div>
+      <div class="footer-col">
+        <h5>Recursos y Legal</h5>
+        <ul><li><a href="#contacto">Política de Privacidad</a></li><li><a href="#contacto">Términos de Uso</a></li></ul>
+      </div>
+      <div class="footer-col">
+        <h5>Conectar en Redes</h5>
+        <div class="social-pills">
+          <a href="#" class="social-pill">LinkedIn</a>
+          <a href="#" class="social-pill">Instagram</a>
+          <a href="#" class="social-pill">Facebook</a>
+          <a href="#" class="social-pill">X</a>
+          <a href="#" class="social-pill">TikTok</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 JOSECADENA.ORG. Todos los derechos reservados.</div>
+      <div>Ecuador • Desarrollado con arquitectura en la nube</div>
+    </div>
+  </footer>
+</body>
+</html>
